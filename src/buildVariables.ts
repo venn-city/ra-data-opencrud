@@ -226,6 +226,19 @@ const buildUpdateVariables = (introspectionResults: IntrospectionResult) => (
       }
 
       if (isObject(params.data[key])) {
+        const type = introspectionResults.types.find(
+          t => t.name === resource.type.name
+        ) as IntrospectionObjectType;
+        const fieldInType = type.fields.find(t => t.name === key);
+        if (fieldInType && (<IntrospectionNamedTypeRef>fieldInType.type).name === "Json") {
+          return {
+            ...acc,
+            data: {
+              ...acc.data,
+              [key]: params.data[key]
+            }
+          };
+        }
         const fieldsToUpdate = buildReferenceField({
           inputArg: params.data[key],
           introspectionResults,

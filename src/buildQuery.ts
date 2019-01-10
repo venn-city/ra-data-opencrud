@@ -8,7 +8,7 @@ export const buildQueryFactory = () => (
   introspectionResults: IntrospectionResult
 ) => {
   const knownResources = introspectionResults.resources.map(r => r.type.name);
-
+  console.log('This a Venn version');
   return (
     aorFetchType: string,
     resourceName: string,
@@ -32,7 +32,7 @@ export const buildQueryFactory = () => (
     if (!queryType) {
       throw new Error(
         `No query or mutation matching aor fetch type ${aorFetchType} could be found for resource ${
-          resource.type.name
+        resource.type.name
         }`
       );
     }
